@@ -45,8 +45,8 @@
                 </form>
                 <ul class="navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                            <img alt="image" src="<?= base_url('uploads/profile/' . $this->dt_admin->image); ?>" class="rounded-circle mr-1">
-                            <div class="d-sm-none d-lg-inline-block">Hi, <?= $this->dt_admin->username; ?></div>
+                            <img alt="image" src="<?= base_url('uploads/profile/' . $this->dt_user->image); ?>" class="rounded-circle mr-1">
+                            <div class="d-sm-none d-lg-inline-block">Hi, <?= $this->dt_user->username; ?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="dropdown-title">Logged in 5 min ago</div>

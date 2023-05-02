@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="<?= base_url(); ?>assets/table/datatables.net-select-bs4/css/select.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>assets/modules/izitoast/css/iziToast.min.css">
 
-
     <!-- Template CSS -->
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/style.css">
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/components.css">
@@ -25,6 +24,7 @@
 <body>
     <div class="toastr-success" data-flashdata="<?= $this->session->flashdata('toastr-success'); ?>"></div>
     <div class="toastr-error" data-flashdata="<?= $this->session->flashdata('toastr-error'); ?>"></div>
+
     <div id="app">
         <div class="main-wrapper">
             <div class="navbar-bg"></div>
@@ -37,8 +37,8 @@
                 </form>
                 <ul class="navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                            <img alt="image" src="<?= base_url('uploads/profile/' . $this->dt_admin->image); ?>" class="rounded-circle mr-1">
-                            <div class="d-sm-none d-lg-inline-block">Hi, <?= $this->dt_admin->name; ?></div>
+                            <img alt="image" src="<?= base_url('uploads/profile/' . $this->dt_user->image); ?>" class="rounded-circle mr-1">
+                            <div class="d-sm-none d-lg-inline-block">Hi, <?= $this->dt_user->name; ?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="dropdown-title">Logged in 5 min ago</div>
@@ -93,10 +93,9 @@
 
     <!-- Page Specific JS File -->
     <script src="<?= base_url(); ?>assets/js/page/modules-datatables.js"></script>
-    <script src="<?= base_url(); ?>assets/js/page/modules-toastr.js"></script>
 
     <script>
-        var success = $('.toastr-succes').data('flashdata');
+        var success = $('.toastr-success').data('flashdata');
         var error = $('.toastr-error').data('flashdata');
 
         if (success) {

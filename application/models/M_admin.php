@@ -3,68 +3,40 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_admin extends CI_Model
 {
-
-    public function getdatasensor()
+    public function getBarang()
     {
-        $this->db->order_by('date', 'desc');
-        return $this->db->get('sensor')->result();
+        $this->db->order_by('namaBarang', 'asc');
+        return $this->db->get('barang')->result();
     }
 
-    public function get($table)
+    public function getCustomer()
     {
-        return $this->db->get($table);
+        $this->db->where('role_id', 2);
+        $this->db->order_by('name', 'asc');
+
+        return $this->db->get('user')->result();
     }
 
-    public function getTinggi()
+    public function getOrders()
     {
-        $this->db->select('tinggi_auto,tinggi_manual');
-        $this->db->order_by('id', 'desc');
-        return $this->db->get('sensor', 1)->row();
+        $this->db->select('orders.*, barang.namaBarang, barang.kodeBarang, user.name');
+        $this->db->join('barang', 'barang.id = orders.idBarang', 'inner');
+        $this->db->join('user', 'user.id = orders.idUser', 'inner');
+
+        $this->db->where('orders.status', 1);
+
+        $this->db->group_by('orders.idKhusus');
+        $this->db->order_by('orders.createdAt', 'desc');
+
+        return $this->db->get('orders')->result();
     }
 
-    public function getpH()
+    public function getListProgres($where)
     {
-        $this->db->select('pH');
-        $this->db->order_by('id', 'desc');
-        return $this->db->get('sensor', 1)->row();
-    }
+        $this->db->where($where);
+        $this->db->order_by('tanggal', 'desc');
 
-    public function getDebit()
-    {
-        $this->db->select('debit');
-        $this->db->order_by('id', 'desc');
-        return $this->db->get('sensor', 1)->row();
-    }
-
-    public function getPpm()
-    {
-        $this->db->select('ppm');
-        $this->db->order_by('id', 'desc');
-        return $this->db->get('sensor', 1)->row();
-    }
-
-    public function countTinggi()
-    {
-        $this->db->select('tinggi_manual,tinggi_auto');
-        return $this->db->get('sensor')->num_rows();
-    }
-
-    public function countpH()
-    {
-        $this->db->select('pH');
-        return $this->db->get('sensor')->num_rows();
-    }
-
-    public function countDebit()
-    {
-        $this->db->select('debit');
-        return $this->db->get('sensor')->num_rows();
-    }
-
-    public function countPpm()
-    {
-        $this->db->select('ppm');
-        return $this->db->get('sensor')->num_rows();
+        return $this->db->get('progres')->result();
     }
 }
 

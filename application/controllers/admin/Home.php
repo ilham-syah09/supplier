@@ -12,7 +12,7 @@ class Home extends CI_Controller
         }
 
         $this->db->where('id', $this->session->userdata('id'));
-        $this->dt_admin = $this->db->get('user')->row();
+        $this->dt_user = $this->db->get('user')->row();
 
         $this->load->model('M_admin', 'admin');
     }

@@ -17,16 +17,16 @@
             <li class="nav-item dropdown" id="clickable">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Data Barang</span></a>
                 <ul class="dropdown-menu">
-                    <li class="<?= ($this->uri->segment(2) == 'barang_masuk') ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/barang_masuk'); ?>"><i class="fas fa-users"></i> <span>List barang</span></a></li>
+                    <li class="<?= ($this->uri->segment(2) == 'barang') ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/barang'); ?>"><i class="fas fa-users"></i> <span>List barang</span></a></li>
                 </ul>
             </li>
 
             <li class="menu-header">Customer</li>
 
             <!-- dashboard -->
-            <li class="<?= ($this->uri->segment(2) == 'home') ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/home'); ?>"><i class="fas fa-fire"></i> <span>List customer</span></a></li>
+            <li class="<?= ($this->uri->segment(2) == 'customer') ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/customer'); ?>"><i class="fas fa-fire"></i> <span>List customer</span></a></li>
 
-            <li class="<?= ($this->uri->segment(2) == 'home') ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/home'); ?>"><i class="fas fa-fire"></i> <span>Pesanan customer</span></a></li>
+            <li class="<?= ($this->uri->segment(2) == 'orders') ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/orders'); ?>"><i class="fas fa-fire"></i> <span>Pesanan customer</span></a></li>
 
             <li class=""><a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
 

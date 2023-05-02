@@ -15,10 +15,10 @@
                         </div>
                         <div class="card-body">
                             <div class="user-item">
-                                <img alt="image" src="<?= base_url('uploads/profile/' . $this->dt_admin->image); ?>" class="img-fluid" width="200">
+                                <img alt="image" src="<?= base_url('uploads/profile/' . $this->dt_user->image); ?>" class="img-fluid" width="200">
                                 <div class="user-details">
-                                    <div class="user-name"><?= $this->dt_admin->name; ?></div>
-                                    <div class="text-job text-muted"><?= $this->dt_admin->username; ?></div>
+                                    <div class="user-name"><?= $this->dt_user->name; ?></div>
+                                    <div class="text-job text-muted"><?= $this->dt_user->username; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="card-body">
                             <form action="<?= base_url('user/profile/edit'); ?>" method="post" enctype="multipart/form-data">
-                                <input type="hidden" value="<?= $this->dt_admin->image; ?>" name="previmage">
+                                <input type="hidden" value="<?= $this->dt_user->image; ?>" name="previmage">
                                 <div class="row">
                                     <div class="col-md">
                                         <div class="form-group">
@@ -44,13 +44,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" class="form-control" name="username" value="<?= $this->dt_admin->username; ?>" readonly>
+                                            <input type="text" class="form-control" name="username" value="<?= $this->dt_user->username; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input type="text" class="form-control" name="name" value="<?= $this->dt_admin->name; ?>">
+                                            <input type="text" class="form-control" name="name" value="<?= $this->dt_user->name; ?>">
                                         </div>
                                     </div>
                                 </div>

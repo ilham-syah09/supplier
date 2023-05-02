@@ -12,7 +12,7 @@ class Profile extends CI_Controller
         }
 
         $this->db->where('id', $this->session->userdata('id'));
-        $this->dt_admin = $this->db->get('user')->row();
+        $this->dt_user = $this->db->get('user')->row();
     }
 
     public function index()
@@ -66,7 +66,7 @@ class Profile extends CI_Controller
                             'image'     => $upload_data['file_name']
                         ];
 
-                        $this->db->where('id', $this->dt_admin->id);
+                        $this->db->where('id', $this->dt_user->id);
                         $insert = $this->db->update('user', $data);
 
                         if ($insert) {
@@ -108,7 +108,7 @@ class Profile extends CI_Controller
                         'image'     => $upload_data['file_name']
                     ];
 
-                    $this->db->where('id', $this->dt_admin->id);
+                    $this->db->where('id', $this->dt_user->id);
                     $insert = $this->db->update('user', $data);
 
                     if ($insert) {

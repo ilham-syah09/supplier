@@ -10,15 +10,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-    <!-- CSS Libraries -->
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/node_modules/bootstrap-social/bootstrap-social.css">
-
     <!-- Template CSS -->
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/style.css">
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/components.css">
+
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/modules/izitoast/css/iziToast.min.css">
 </head>
 
 <body>
+    <div class="toastr-success" data-flashdata="<?= $this->session->flashdata('toastr-success'); ?>"></div>
+    <div class="toastr-error" data-flashdata="<?= $this->session->flashdata('toastr-error'); ?>"></div>
+
     <div id="app">
         <section class="section">
             <div class="container mt-5">
@@ -86,12 +88,32 @@
     <script src="<?= base_url(); ?>assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    <script src="<?= base_url(); ?>assets/modules/izitoast/js/iziToast.min.js"></script>
 
     <!-- Template JS File -->
     <script src="<?= base_url(); ?>assets/js/scripts.js"></script>
     <script src="<?= base_url(); ?>assets/js/custom.js"></script>
 
-    <!-- Page Specific JS File -->
+    <script>
+        var success = $('.toastr-success').data('flashdata');
+        var error = $('.toastr-error').data('flashdata');
+
+        if (success) {
+            iziToast.success({
+                title: 'success',
+                message: success,
+                position: 'topRight'
+            });
+        }
+
+        if (error) {
+            iziToast.error({
+                title: 'Error',
+                message: error,
+                position: 'topRight'
+            });
+        }
+    </script>
 </body>
 
 </html>
