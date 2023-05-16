@@ -13,14 +13,23 @@ class Home extends CI_Controller
 
         $this->db->where('id', $this->session->userdata('id'));
         $this->dt_user = $this->db->get('user')->row();
+
+        $this->load->model('M_Customer', 'customer');
     }
 
     public function index()
     {
         $data = [
             'title'     => 'Dashboard',
-            'sidebar'   => 'user/sidebar',
-            'page'      => 'user/dashboard'
+            'page'      => 'user/dashboard',
+            'keranjang' =>  $this->customer->getCount([
+                'idUser' => $this->dt_user->id,
+                'status' => 0
+            ], 'orders'),
+            'orders'    =>  $this->customer->getCount([
+                'idUser' => $this->dt_user->id,
+                'status' => 1
+            ], 'orders')
         ];
 
         $this->load->view('user/index', $data);

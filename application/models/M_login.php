@@ -24,10 +24,14 @@ class M_login extends CI_Model
                     'role'            => $role
                 );
 
-                if ($login) {
-                    $this->session->set_userdata('log_' . $role, $login);
-                    $this->session->set_userdata($login);
-                    return $role;
+                if ($role == 'user' && $data->status == 0) {
+                    return 'Akun belum aktif, silahkan cek email Anda';
+                } else {
+                    if ($login) {
+                        $this->session->set_userdata('log_' . $role, $login);
+                        $this->session->set_userdata($login);
+                        return $role;
+                    }
                 }
             } else {
                 return 'Username atau Password Salah!!';

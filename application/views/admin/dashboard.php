@@ -4,19 +4,52 @@
             <h1><?= $title; ?></h1>
         </div>
         <div class="section-body">
-            <div class="alert alert-success">
-                <h3>Backend</h3>
-                <p>1. Menu list barang, data : id, kodebarang, namabarang (tidak ada stok karena sistemnya Pre Order)</p>
-                <p>2. List customer berisi list customer hasil dari registrasi sistem</p>
-                <p>3. Pesanan customer berisi list pesanan customer, alur : customer memilih barang dari frontend kemudian masuk ke dalam keranjang jika sudah maka cekout, default status menunggu untuk verifikasi admin. (tidak ada sistem pembayaran hanya ada status). jika sudah verifikasi admin dari menunggu ke proses maka tampilkan status untuk user dan tanggal estimasi pengiriman barang. jika status sudah sampai tampilkan faktur barang berupa data customer, data barang yang dikirim</p>
-            </div>
-            <div class="alert alert-danger">
-                <h3>Frontend</h3>
-                <p>1. Tampilan halaman awal seperti company profile, data profile, nama perusahaan, tagline, tentang, email, alamat, hp, catalog barang produksi</p>
-                <p>2. Terdapat registrasi untuk supplier berupa registrasi email smpt</p>
-                <p>3. customer yg sudah registrasi menunggu untuk verifikasi admin apakah customer ini asli atau palsu(hanya iseng mendaftar). jika palsu tidak bisa order barang</p>
-                <p>3. customer valid kemudian bisa order barang. Pesanan customer berisi list pesanan customer, alur : customer memilih barang dari frontend kemudian masuk ke dalam keranjang jika sudah maka cekout, default status menunggu untuk verifikasi admin. (tidak ada sistem pembayaran hanya ada status). jika sudah verifikasi admin dari menunggu ke proses maka tampilkan status untuk user dan tanggal estimasi pengiriman barang. jika status sudah sampai tampilkan faktur barang berupa data customer, data barang yang dikirim</p>
-                <p>5. sementara kie ndisit ya ges </p>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-primary">
+                            <i class="fa fa-users fa-2x text-white"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Customer</h4>
+                            </div>
+                            <div class="card-body">
+                                <?= $user; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-info">
+                            <i class="fa fa-circle fa-2x text-white"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Barang</h4>
+                            </div>
+                            <div class="card-body">
+                                <?= $barang; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-success">
+                            <i class="fa fa-first-order fa-2x text-white"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Orders</h4>
+                            </div>
+                            <div class="card-body">
+                                <?= $orders; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

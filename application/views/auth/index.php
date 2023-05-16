@@ -67,6 +67,9 @@
                                             Login
                                         </button>
                                     </div>
+                                    <div class="text-center">
+                                        <span>Belum punya akun?</span><a href="<?= base_url('registrasi'); ?>"> Daftar disini</a> <br>
+                                    </div>
                                 </form>
                             </div>
                         </div>

@@ -54,5 +54,9 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['admin'] = 'admin/home';
-$route['pj'] = 'pj/home';
+
+// user
 $route['user'] = 'user/home';
+
+$route['user/listbarang/addToCart'] = 'user/listbarang/addToCart';
+$route['user/listbarang/(:any)']    = 'user/listbarang';

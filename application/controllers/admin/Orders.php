@@ -29,6 +29,20 @@ class Orders extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
+	public function getListBarang()
+	{
+		$barang = $this->admin->getKeranjang([
+			'idUser'   => $this->input->get('idUser'),
+			'idKhusus' => $this->input->get('idKhusus')
+		]);
+
+		$result = [
+			'data' => ($barang) ? $barang : null
+		];
+
+		echo json_encode($result);
+	}
+
 	public function getListProgres()
 	{
 		$progres = $this->admin->getListProgres([

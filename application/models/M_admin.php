@@ -3,6 +3,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_admin extends CI_Model
 {
+    public function getCount($where = null, $table)
+    {
+        if ($where) {
+            $this->db->where($where);
+        }
+
+        return $this->db->get($table)->num_rows();
+    }
+
     public function getBarang()
     {
         $this->db->order_by('namaBarang', 'asc');
@@ -27,6 +36,18 @@ class M_admin extends CI_Model
 
         $this->db->group_by('orders.idKhusus');
         $this->db->order_by('orders.createdAt', 'desc');
+
+        return $this->db->get('orders')->result();
+    }
+
+    public function getKeranjang($where)
+    {
+        $this->db->select('orders.*, barang.kodeBarang, barang.namaBarang, barang.gambar');
+        $this->db->join('barang', 'barang.id = orders.idBarang', 'inner');
+
+        $this->db->where($where);
+
+        $this->db->order_by('barang.namaBarang', 'asc');
 
         return $this->db->get('orders')->result();
     }

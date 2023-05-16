@@ -22,7 +22,10 @@ class Home extends CI_Controller
         $data = [
             'title'     => 'Dashboard',
             'sidebar'   => 'admin/sidebar',
-            'page'      => 'admin/dashboard'
+            'page'      => 'admin/dashboard',
+            'user'      => $this->admin->getCount('', 'user'),
+            'barang'    => $this->admin->getCount('', 'barang'),
+            'orders'    => $this->admin->getCount(['status' => 1], 'orders')
         ];
 
         $this->load->view('index', $data);

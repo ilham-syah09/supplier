@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Layout &rsaquo; Top Navigation &mdash; Stisla</title>
+    <title><?= $title; ?></title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -15,14 +15,23 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/style.css">
     <link rel="stylesheet" href="<?= base_url(); ?>assets/css/components.css">
+
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/table/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/table/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/modules/izitoast/css/iziToast.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 </head>
 
 <body class="layout-3">
+    <div class="toastr-success" data-flashdata="<?= $this->session->flashdata('toastr-success'); ?>"></div>
+    <div class="toastr-error" data-flashdata="<?= $this->session->flashdata('toastr-error'); ?>"></div>
+
     <div id="app">
         <div class="main-wrapper container">
-            <div class="navbar-bg"></div>
-            <nav class="navbar navbar-expand-lg main-navbar">
-                <a href="index.html" class="navbar-brand sidebar-gone-hide">Stisla</a>
+            <nav class="navbar navbar-expand-lg main-navbar bg-primary">
+                <a href="<?= base_url('user'); ?>" class="navbar-brand sidebar-gone-hide">Supplier</a>
                 <div class="navbar-nav">
                     <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
                 </div>
@@ -32,9 +41,10 @@
                     </a>
                     <div class="container">
                         <ul class="navbar-nav">
-                            <li class="nav-item active"><a href="#" class="nav-link">Application</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link">Report Something</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link">Server Status</a></li>
+                            <li class="nav-item <?= ($this->uri->segment(2) == '') ? 'active' : ''; ?>"><a href="<?= base_url('user'); ?>" class="nav-link">Dashboard</a></li>
+                            <li class="nav-item <?= ($this->uri->segment(2) == 'listbarang') ? 'active' : ''; ?>"><a href="<?= base_url('user/listbarang'); ?>" class="nav-link">List Barang</a></li>
+                            <li class="nav-item <?= ($this->uri->segment(2) == 'keranjang') ? 'active' : ''; ?>"><a href="<?= base_url('user/keranjang'); ?>" class="nav-link">Keranjang</a></li>
+                            <li class="nav-item <?= ($this->uri->segment(2) == 'orders') ? 'active' : ''; ?>"><a href="<?= base_url('user/orders'); ?>" class="nav-link">Orders</a></li>
                         </ul>
                     </div>
                 </div>
@@ -49,15 +59,11 @@
                             <div class="d-sm-none d-lg-inline-block">Hi, <?= $this->dt_user->username; ?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-title">Logged in 5 min ago</div>
-                            <a href="features-profile.html" class="dropdown-item has-icon">
+                            <a href="<?= base_url('user/profile'); ?>" class="dropdown-item has-icon">
                                 <i class="far fa-user"></i> Profile
                             </a>
-                            <a href="features-settings.html" class="dropdown-item has-icon">
-                                <i class="fas fa-cog"></i> Settings
-                            </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item has-icon text-danger">
+                            <a href="<?= base_url('auth/logout'); ?>" class="dropdown-item has-icon text-danger">
                                 <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                         </div>
@@ -65,71 +71,9 @@
                 </ul>
             </nav>
 
-            <nav class="navbar navbar-secondary navbar-expand-lg">
-                <div class="container">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link"><i class="far fa-heart"></i><span>Top Navigation</span></a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="far fa-clone"></i><span>Multiple Dropdown</span></a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a href="#" class="nav-link">Not Dropdown Link</a></li>
-                                <li class="nav-item dropdown"><a href="#" class="nav-link has-dropdown">Hover Me</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
-                                        <li class="nav-item dropdown"><a href="#" class="nav-link has-dropdown">Link 2</a>
-                                            <ul class="dropdown-menu">
-                                                <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
-                                                <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
-                                                <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item"><a href="#" class="nav-link">Link 3</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
             <!-- Main Content -->
             <div class="main-content">
-                <section class="section">
-                    <div class="section-header">
-                        <h1>Top Navigation</h1>
-                        <div class="section-header-breadcrumb">
-                            <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                            <div class="breadcrumb-item"><a href="#">Layout</a></div>
-                            <div class="breadcrumb-item">Top Navigation</div>
-                        </div>
-                    </div>
-
-                    <div class="section-body">
-                        <h2 class="section-title">This is Example Page</h2>
-                        <p class="section-lead">This page is just an example for you to create your own page.</p>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Example Card</h4>
-                            </div>
-                            <div class="card-body">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            </div>
-                            <div class="card-footer bg-whitesmoke">
-                                This is card footer
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <?php $this->load->view($page); ?>
             </div>
             <footer class="main-footer">
                 <div class="footer-left">
@@ -143,7 +87,6 @@
     </div>
 
     <!-- General JS Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
@@ -151,12 +94,39 @@
     <script src="<?= base_url(); ?>assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    <script src="<?= base_url(); ?>assets/table/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url(); ?>assets/table/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="<?= base_url(); ?>assets/table/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
+
+    <script src="<?= base_url(); ?>assets/modules/izitoast/js/iziToast.min.js"></script>
 
     <!-- Page Specific JS File -->
+    <script src="<?= base_url(); ?>assets/js/page/modules-datatables.js"></script>
 
     <!-- Template JS File -->
     <script src="<?= base_url(); ?>assets/js/scripts.js"></script>
     <script src="<?= base_url(); ?>assets/js/custom.js"></script>
+
+    <script>
+        var success = $('.toastr-success').data('flashdata');
+        var error = $('.toastr-error').data('flashdata');
+
+        if (success) {
+            iziToast.success({
+                title: 'success',
+                message: success,
+                position: 'topRight'
+            });
+        }
+
+        if (error) {
+            iziToast.error({
+                title: 'Error',
+                message: error,
+                position: 'topRight'
+            });
+        }
+    </script>
 </body>
 
 </html>
