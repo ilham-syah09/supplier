@@ -22,8 +22,10 @@
 												#
 											</th>
 											<th>Name</th>
-											<th>Username</th>
-											<th>Image</th>
+											<th>Email</th>
+											<th>No. HP</th>
+											<th>KTP</th>
+											<th>Alamat</th>
 											<th>Status</th>
 											<th>Action</th>
 										</tr>
@@ -35,9 +37,17 @@
 												<td><?= $i++; ?></td>
 												<td><?= $data->name; ?></td>
 												<td><?= $data->username; ?></td>
+												<td><?= $data->noHp; ?></td>
 												<td>
-													<img src="<?= base_url('uploads/profile/' . $data->image); ?>" width="50" class="img-fluid rounded-circle" alt="image">
+													<?php if ($data->ktp != null) : ?>
+														<a href="<?= base_url('uploads/ktp/' . $data->ktp); ?>" target="_blank">
+															<img src="<?= base_url('uploads/ktp/' . $data->ktp); ?>" width="50" class="img-fluid rounded-circle" alt="KTP">
+														</a>
+													<?php else : ?>
+														-
+													<?php endif; ?>
 												</td>
+												<td><?= $data->alamat; ?></td>
 												<td>
 													<span class="badge <?= ($data->status == 0) ? 'badge-danger' : 'badge-success'; ?>"><?= ($data->status == 0) ? 'Unverified' : 'Verified'; ?></span>
 												</td>
@@ -48,7 +58,7 @@
 														</button>
 														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 															<a href="<?= base_url('admin/customer/delete/' . $data->id); ?>" class="dropdown-item"><i class="fas fa-trash"></i> Delete</a>
-															<a href="javascript:void(0)" class="dropdown-item edit_btn" data-toggle="modal" data-target="#modalEdit" data-id="<?= $data->id; ?>" data-name="<?= $data->name; ?>" data-username="<?= $data->username; ?>" data-status="<?= $data->status; ?>"><i class="fas fa-arrow-left"></i> Edit</a>
+															<a href="javascript:void(0)" class="dropdown-item edit_btn" data-toggle="modal" data-target="#modalEdit" data-id="<?= $data->id; ?>" data-name="<?= $data->name; ?>" data-username="<?= $data->username; ?>" data-status="<?= $data->status; ?>" data-nohp="<?= $data->noHp; ?>" data-alamat="<?= $data->alamat; ?>"><i class="fas fa-arrow-left"></i> Edit</a>
 															<a href="<?= base_url('admin/customer/resetPwd/' . $data->id); ?>" class="dropdown-item"><i class="fas fa-arrow-left"></i> Reset Password</a>
 														</div>
 													</div>
@@ -78,14 +88,26 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="<?= base_url('admin/customer/add'); ?>" method="post">
+				<form action="<?= base_url('admin/customer/add'); ?>" method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Name</label>
 						<input type="text" class="form-control" name="name">
 					</div>
 					<div class="form-group">
-						<label>Username / Email</label>
+						<label>Email</label>
 						<input type="email" class="form-control" name="username">
+					</div>
+					<div class="form-group">
+						<label>No. HP</label>
+						<input type="number" class="form-control" name="noHp">
+					</div>
+					<div class="form-group">
+						<label>Foto KTP</label>
+						<input type="file" class="form-control" name="ktp">
+					</div>
+					<div class="form-group">
+						<label>Alamat</label>
+						<textarea name="alamat" class="form-control" cols="30" rows="10"></textarea>
 					</div>
 					<div class="modal-footer bg-whitesmoke br">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -108,15 +130,27 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="<?= base_url('admin/customer/edit'); ?>" method="post">
+				<form action="<?= base_url('admin/customer/edit'); ?>" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="id" id="idCustomer">
 					<div class="form-group">
 						<label>Name</label>
 						<input type="text" class="form-control" name="name" id="name">
 					</div>
 					<div class="form-group">
-						<label>Username</label>
+						<label>Email</label>
 						<input type="text" class="form-control" name="username" id="username">
+					</div>
+					<div class="form-group">
+						<label>No. HP</label>
+						<input type="number" class="form-control" name="noHp" id="nohp">
+					</div>
+					<div class="form-group">
+						<label>Foto KTP</label>
+						<input type="file" class="form-control" name="ktp">
+					</div>
+					<div class="form-group">
+						<label>Alamat</label>
+						<textarea name="alamat" class="form-control" cols="30" rows="10" id="alamat"></textarea>
 					</div>
 					<div class="form-group">
 						<label>Status</label>
@@ -145,11 +179,15 @@
 			let name = $(this).data('name');
 			let username = $(this).data('username');
 			let status = $(this).data('status');
+			let nohp = $(this).data('nohp');
+			let alamat = $(this).data('alamat');
 
 			$('#idCustomer').val(id);
 			$('#name').val(name);
 			$('#username').val(username);
 			$('#status').val(status);
+			$('#nohp').val(nohp);
+			$('#alamat').text(alamat);
 		});
 	});
 </script>

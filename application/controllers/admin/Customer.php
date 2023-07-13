@@ -31,19 +31,48 @@ class Customer extends CI_Controller
 
 	public function add()
 	{
-		$data = [
-			'name'         => $this->input->post('name'),
-			'username'     => $this->input->post('username'),
-			'password'     => password_hash('customer123', PASSWORD_BCRYPT),
-			'role_id'      => 2
-		];
+		$ktp = $_FILES['ktp']['name'];
 
-		$insert = $this->db->insert('user', $data);
+		if ($ktp) {
+			$this->load->library('upload');
+			$config['upload_path']   = './uploads/ktp';
+			$config['allowed_types'] = 'jpg|jpeg|png';
+			// $config['max_size']             = 3072; // 3 mb
+			$config['remove_spaces'] = TRUE;
+			$config['detect_mime']   = TRUE;
+			$config['encrypt_name']  = TRUE;
 
-		if ($insert) {
-			$this->session->set_flashdata('toastr-success', 'Sukses tambah admin');
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('ktp')) {
+				$this->session->set_flashdata('toastr-error', $this->upload->display_errors());
+
+				redirect('admin/customer', 'refresh');
+			} else {
+				$upload_data = $this->upload->data();
+
+				$data = [
+					'name'     => $this->input->post('name'),
+					'username' => $this->input->post('username'),
+					'noHp'     => $this->input->post('noHp'),
+					'alamat'   => $this->input->post('alamat'),
+					'password' => password_hash('customer123', PASSWORD_BCRYPT),
+					'role_id'  => 2,
+					'status'   => 1,
+					'ktp'      => $upload_data['file_name'],
+				];
+
+				$insert = $this->db->insert('user', $data);
+
+				if ($insert) {
+					$this->session->set_flashdata('toastr-success', 'Sukses tambah user');
+				} else {
+					$this->session->set_flashdata('toastr-error', 'Gagal tambah user');
+				}
+			}
 		} else {
-			$this->session->set_flashdata('toastr-error', 'Gagal tambah admin');
+			$this->session->set_flashdata('toastr-error', 'KTP harus ada');
 		}
 
 		redirect('admin/customer', 'refresh');
@@ -51,19 +80,69 @@ class Customer extends CI_Controller
 
 	public function edit()
 	{
-		$data = [
-			'name'     => $this->input->post('name'),
-			'username' => $this->input->post('username'),
-			'status'   => $this->input->post('status')
-		];
+		$ktp = $_FILES['ktp']['name'];
 
-		$this->db->where('id', $this->input->post('id'));
-		$update = $this->db->update('user', $data);
+		if ($ktp) {
+			$this->load->library('upload');
+			$config['upload_path']   = './uploads/ktp';
+			$config['allowed_types'] = 'jpg|jpeg|png';
+			// $config['max_size']             = 3072; // 3 mb
+			$config['remove_spaces'] = TRUE;
+			$config['detect_mime']   = TRUE;
+			$config['encrypt_name']  = TRUE;
 
-		if ($update) {
-			$this->session->set_flashdata('toastr-success', 'Sukses edit admin');
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('ktp')) {
+				$this->session->set_flashdata('toastr-error', $this->upload->display_errors());
+
+				redirect('admin/customer', 'refresh');
+			} else {
+				$upload_data = $this->upload->data();
+
+				$data = [
+					'name'     => $this->input->post('name'),
+					'username' => $this->input->post('username'),
+					'noHp'     => $this->input->post('noHp'),
+					'alamat'   => $this->input->post('alamat'),
+					'status'   => $this->input->post('status'),
+					'ktp'      => $upload_data['file_name'],
+				];
+
+				$this->db->where('id', $this->input->post('id'));
+				$user = $this->db->get('user')->row();
+
+				$this->db->where('id', $this->input->post('id'));
+				$update = $this->db->update('user', $data);
+
+				if ($update) {
+					if ($user->ktp != null) {
+						unlink(FCPATH . 'uploads/ktp/' . $user->ktp);
+					}
+
+					$this->session->set_flashdata('toastr-success', 'Sukses edit user');
+				} else {
+					$this->session->set_flashdata('toastr-error', 'Gagal edit user');
+				}
+			}
 		} else {
-			$this->session->set_flashdata('toastr-error', 'Gagal edit admin');
+			$data = [
+				'name'     => $this->input->post('name'),
+				'username' => $this->input->post('username'),
+				'noHp'     => $this->input->post('noHp'),
+				'alamat'   => $this->input->post('alamat'),
+				'status'   => $this->input->post('status'),
+			];
+
+			$this->db->where('id', $this->input->post('id'));
+			$update = $this->db->update('user', $data);
+
+			if ($update) {
+				$this->session->set_flashdata('toastr-success', 'Sukses edit user');
+			} else {
+				$this->session->set_flashdata('toastr-error', 'Gagal edit user');
+			}
 		}
 
 		redirect('admin/customer', 'refresh');
@@ -71,10 +150,18 @@ class Customer extends CI_Controller
 
 	public function delete($id)
 	{
-		$this->db->delete('user', ['id' => $id]);
+		$this->db->where('id', $id);
+		$user = $this->db->get('user')->row();
 
-		$this->session->set_flashdata('toastr-success', 'Sukses tambah admin');
+		$delete = $this->db->delete('user', ['id' => $id]);
 
+		if ($delete) {
+			if ($user->ktp != null) {
+				unlink(FCPATH . 'uploads/ktp/' . $user->ktp);
+			}
+
+			$this->session->set_flashdata('toastr-success', 'Sukses delete user');
+		}
 		redirect('admin/customer', 'refresh');
 	}
 

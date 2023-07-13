@@ -86,6 +86,41 @@ class Orders extends CI_Controller
 
 		redirect('admin/orders', 'refresh');
 	}
+
+	public function editStatusPembayaran()
+	{
+		$data = [
+			'statusPembayaran'     => $this->input->post('statusPembayaran')
+		];
+
+		$this->db->where('idUser', $this->input->post('idUser'));
+		$this->db->where('idKhusus', $this->input->post('idKhusus'));
+		$update = $this->db->update('orders', $data);
+
+		if ($update) {
+			if ($data['statusPembayaran'] == 1) {
+				$progres = [
+					'idUser'   => $this->input->post('idUser'),
+					'idKhusus' => $this->input->post('idKhusus'),
+					'status'   => 'Menunggu',
+					'tanggal' => date('Y-m-d')
+				];
+
+				$this->db->insert('progres', $progres);
+			} else {
+				$this->db->where('idUser', $this->input->post('idUser'));
+				$this->db->where('idKhusus', $this->input->post('idKhusus'));
+
+				$this->db->delete('progres');
+			}
+
+			$this->session->set_flashdata('toastr-success', 'Sukses edit status pembayaran');
+		} else {
+			$this->session->set_flashdata('toastr-error', 'Gagal edit status pembayaran');
+		}
+
+		redirect('admin/orders', 'refresh');
+	}
 }
 
     /* End of file Orders.php */

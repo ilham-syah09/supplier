@@ -31,7 +31,7 @@
     <div id="app">
         <div class="main-wrapper container">
             <nav class="navbar navbar-expand-lg main-navbar bg-primary">
-                <a href="<?= base_url('user'); ?>" class="navbar-brand sidebar-gone-hide">Supplier</a>
+                <a href="<?= base_url('user'); ?>" class="navbar-brand sidebar-gone-hide">Customer</a>
                 <div class="navbar-nav">
                     <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
                 </div>

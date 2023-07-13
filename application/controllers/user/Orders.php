@@ -59,6 +59,64 @@ class Orders extends CI_Controller
 
 		echo json_encode($result);
 	}
+
+	public function upload()
+	{
+		$file = $_FILES['file']['name'];
+
+		if ($file) {
+			$this->load->library('upload');
+			$config['upload_path']   = './uploads/bukti';
+			$config['allowed_types'] = 'jpg|jpeg|png';
+			// $config['max_size']             = 3072; // 3 mb
+			$config['remove_spaces'] = TRUE;
+			$config['detect_mime']   = TRUE;
+			$config['encrypt_name']  = TRUE;
+
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('file')) {
+				$this->session->set_flashdata('toastr-error', $this->upload->display_errors());
+
+				redirect('user/orders', 'refresh');
+			} else {
+				$upload_data = $this->upload->data();
+
+				$data = [
+					'statusPembayaran' => 3,
+					'bukti'  => $upload_data['file_name']
+				];
+			}
+		} else {
+			$this->session->set_flashdata('toastr-error', 'File tidak boleh kosong');
+
+			redirect('user/orders', 'refresh');
+		}
+
+		$where = [
+			'idUser'   => $this->dt_user->id,
+			'idKhusus' => $this->input->post('idKhusus')
+		];
+
+		$this->db->where($where);
+		$order = $this->db->get('orders')->row();
+
+		$this->db->where($where);
+		$update = $this->db->update('orders', $data);
+
+		if ($update) {
+			if ($order->bukti != null) {
+				unlink(FCPATH . 'uploads/bukti/' . $order->bukti);
+			}
+
+			$this->session->set_flashdata('toastr-success', 'Bukti transfer berhasil diupload');
+		} else {
+			$this->session->set_flashdata('toastr-error', 'Bukti transfer gagal diupload');
+		}
+
+		redirect('user/orders', 'refresh');
+	}
 }
 
   /* End of file Orders.php */

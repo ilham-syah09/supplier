@@ -15,13 +15,15 @@
 								<table class="table table-striped" id="table-1">
 									<thead>
 										<tr>
-											<th class="text-center">
-												#
-											</th>
+											<th class="text-center">#</th>
+											<th>Total Biaya</th>
+											<th>Bank Transfer</th>
+											<th>Pengiriman</th>
 											<th>Nama Customer</th>
 											<th>Nama Perusahan</th>
 											<th>No. HP</th>
 											<th>Alamat</th>
+											<th>Status Pembayaran</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -30,16 +32,31 @@
 										foreach ($orders as $data) : ?>
 											<tr>
 												<td><?= $i++; ?></td>
+												<td><?= 'Rp. ' . number_format($data->totalBiaya, 0, ',', '.'); ?></td>
+												<td><?= $data->namaBank . ' - ' . $data->noRek; ?></td>
+												<td><?= $data->kota; ?></td>
 												<td><?= $data->name; ?></td>
 												<td><?= $data->namaPT; ?></td>
 												<td><?= $data->nohp; ?></td>
 												<td><?= $data->alamat; ?></td>
+												<td>
+													<?php if ($data->statusPembayaran == 3) : ?>
+														<span class="badge badge-warning">Menunggu</span>
+													<?php elseif ($data->statusPembayaran == 2) : ?>
+														<span class="badge badge-danger">Ditolak</span>
+													<?php elseif ($data->statusPembayaran == 1) : ?>
+														<span class="badge badge-success">Lunas</span>
+													<?php elseif ($data->statusPembayaran == 0) : ?>
+														<span class="badge badge-info">Belum Dibayarkan</span>
+													<?php endif; ?>
+												</td>
 												<td>
 													<div class="dropdown">
 														<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 															Action
 														</button>
 														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+															<a href="javascript:void(0)" class="dropdown-item buktiBtn" data-toggle="modal" data-target="#buktiTf" data-iduser="<?= $data->idUser; ?>" data-idkhusus="<?= $data->idKhusus; ?>" data-bank="<?= $data->namaBank . ' - ' . $data->noRek; ?>" data-statuspembayaran="<?= $data->statusPembayaran; ?>" data-bukti="<?= base_url('uploads/bukti/' . $data->bukti); ?>"><i class="fas fa-arrow-up"></i> Bukti Transfer</a>
 															<a href="javascript:void(0)" class="dropdown-item list_btn" data-toggle="modal" data-target="#listBarang" data-iduser="<?= $data->idUser; ?>" data-idkhusus="<?= $data->idKhusus; ?>"><i class="fas fa-arrow-left"></i> List Barang</a>
 															<a href="javascript:void(0)" class="dropdown-item progres_btn" data-toggle="modal" data-target="#progresPesanan" data-iduser="<?= $data->idUser; ?>" data-idkhusus="<?= $data->idKhusus; ?>"><i class="fas fa-arrow-left"></i> Progres</a>
 															<a href="<?= base_url('admin/orders/delete/' . $data->idKhusus); ?>" class="dropdown-item"><i class="fas fa-trash"></i> Delete</a>
@@ -58,6 +75,51 @@
 			<!-- end main -->
 		</div>
 	</section>
+</div>
+
+<div class="modal fade" id="buktiTf" tabindex="-1" role="dialog" aria-labelledby="buktiTfTitle" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Bukti Transfer</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="<?= base_url('admin/orders/editStatusPembayaran'); ?>" method="POST">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<input type="hidden" name="idUser" id="iduser">
+							<input type="hidden" name="idKhusus" id="idkhusus">
+							<div class="form-group">
+								<label>Bank Transfer</label>
+								<input type="text" name="bank" class="form-control" readonly id="bank">
+							</div>
+							<div class="form-group">
+								<label>Gambar</label>
+								<img src="" alt="File Bukti Transfer" class="img-thumbnail" width="100%" id="bukti">
+							</div>
+							<div class="form-group">
+								<label>Status</label>
+								<select name="statusPembayaran" class="form-control" id="statuspembayaran">
+									<option value="">-- Pilih Status --</option>
+									<option value="0">Belum DIbayarkan</option>
+									<option value="1">Lunas</option>
+									<option value="2">Ditolak</option>
+									<option value="3">Menunggu</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" id="listBarang" tabindex="-1" role="dialog" aria-labelledby="listBarangTitle" aria-hidden="true">
@@ -82,6 +144,9 @@
 												<th>Kode Barang</th>
 												<th>Nama Barang</th>
 												<th>Gambar</th>
+												<th>Harga</th>
+												<th>Jumlah</th>
+												<th>Subtotal</th>
 											</tr>
 										</thead>
 										<tbody id="isi_table-list">
@@ -197,6 +262,24 @@
 </div>
 
 <script>
+	let buktiBtn = $('.buktiBtn');
+
+	$(buktiBtn).each(function(i) {
+		$(buktiBtn[i]).click(function() {
+			let iduser = $(this).data('iduser');
+			let idkhusus = $(this).data('idkhusus');
+			let bank = $(this).data('bank');
+			let bukti = $(this).data('bukti');
+			let statuspembayaran = $(this).data('statuspembayaran');
+
+			$('#iduser').val(iduser);
+			$('#idkhusus').val(idkhusus);
+			$('#bank').val(bank);
+			$('#bukti').attr('src', bukti);
+			$('#statuspembayaran').val(statuspembayaran);
+		});
+	});
+
 	let list_btn = $('.list_btn');
 
 	$(list_btn).each(function(i) {
@@ -219,20 +302,47 @@
 				success: function(res) {
 					$('#tampil-list').removeClass('d-none');
 					$('.tr_isi-list').remove();
+					$('.tr_total').remove();
+					$('.tr_ongkir').remove();
 
-					console.log(res);
+					let subTotal = 0;
+
+					let rupiah = new Intl.NumberFormat('id-ID', {
+						style: 'currency',
+						currency: 'IDR'
+					});
 
 					if (res.data != null) {
 						$(res.data).each(function(i) {
+							subTotal += (res.data[i].harga * res.data[i].jumlah);
+
 							$("#tabel-list").append(
 								`<tr class='tr_isi-list'>
                                 <td class='text-center'>${i + 1}</td>
                                 <td>${res.data[i].kodeBarang}</td>
                                 <td>${res.data[i].namaBarang}</td>
                                 <td><img src="<?= base_url('uploads/gambar/'); ?>${res.data[i].gambar}" width="100" class="img-fluid img-thumbnail" alt="${res.data[i].namaBarang}"></td>
+								<td>${rupiah.format(res.data[i].harga)}</td>
+								<td>${res.data[i].jumlah}</td>
+								<td>${rupiah.format((res.data[i].harga * res.data[i].jumlah))}</td>
                                 <tr>`
 							);
 						});
+
+						$("#tabel-list").append(
+							"<tr class='tr_ongkir'>" +
+							"<td colspan='5' class='text-center'>Pengiriman</td>" +
+							"<td>" + res.data[0].kota + "</td>" +
+							"<td>" + rupiah.format(res.data[0].hargaOngkir) + "</td>" +
+							"<tr>"
+						);
+
+						$("#tabel-list").append(
+							"<tr class='tr_total'>" +
+							"<td colspan='6' class='text-center'>Total</td>" +
+							"<td>" + rupiah.format((parseInt(res.data[0].hargaOngkir) + parseInt(subTotal))) + "</td>" +
+							"<tr>"
+						);
 
 					} else {
 						$("#tabel-list").append(

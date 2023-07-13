@@ -55,9 +55,12 @@ class Barang extends CI_Controller
 				$kodeBarang = $this->_kodeBarang();
 
 				$data = [
-					'kodeBarang'     => $kodeBarang,
-					'namaBarang'     => $this->input->post('namaBarang'),
-					'gambar'         => $upload_data['file_name'],
+					'kodeBarang' => $kodeBarang,
+					'namaBarang' => $this->input->post('namaBarang'),
+					'deskripsi'  => $this->input->post('deskripsi'),
+					'harga'      => $this->input->post('harga'),
+					'stok'       => $this->input->post('stok'),
+					'gambar'     => $upload_data['file_name'],
 				];
 
 				$insert = $this->db->insert('barang', $data);
@@ -108,13 +111,19 @@ class Barang extends CI_Controller
 				}
 
 				$data = [
-					'namaBarang'   => $this->input->post('namaBarang'),
-					'gambar'       => $upload_data['file_name']
+					'namaBarang' => $this->input->post('namaBarang'),
+					'deskripsi'  => $this->input->post('deskripsi'),
+					'harga'      => $this->input->post('harga'),
+					'stok'       => $this->input->post('stok'),
+					'gambar'     => $upload_data['file_name']
 				];
 			}
 		} else {
 			$data = [
-				'namaBarang'     => $this->input->post('namaBarang')
+				'namaBarang' => $this->input->post('namaBarang'),
+				'deskripsi'  => $this->input->post('deskripsi'),
+				'harga'      => $this->input->post('harga'),
+				'stok'       => $this->input->post('stok'),
 			];
 		}
 

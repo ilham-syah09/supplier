@@ -38,7 +38,7 @@
                             <div class="card-body">
                                 <form method="POST" action="<?= base_url('auth/proses'); ?>" class="needs-validation" novalidate="">
                                     <div class="form-group">
-                                        <label for="username">Username</label>
+                                        <label for="username">Email</label>
                                         <input id="username" type="text" class="form-control" name="username" tabindex="1" required autofocus>
                                         <div class="invalid-feedback">
                                             Please fill in your username
@@ -67,9 +67,9 @@
                                             Login
                                         </button>
                                     </div>
-                                    <div class="text-center">
+                                    <!-- <div class="text-center">
                                         <span>Belum punya akun?</span><a href="<?= base_url('registrasi'); ?>"> Daftar disini</a> <br>
-                                    </div>
+                                    </div> -->
                                 </form>
                             </div>
                         </div>

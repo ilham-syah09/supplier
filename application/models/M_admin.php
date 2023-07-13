@@ -28,9 +28,11 @@ class M_admin extends CI_Model
 
     public function getOrders()
     {
-        $this->db->select('orders.*, barang.namaBarang, barang.kodeBarang, user.name');
+        $this->db->select('orders.*, barang.namaBarang, barang.kodeBarang, user.name, rekening.namaBank, rekening.noRek, ongkir.kota');
         $this->db->join('barang', 'barang.id = orders.idBarang', 'inner');
         $this->db->join('user', 'user.id = orders.idUser', 'inner');
+        $this->db->join('rekening', 'rekening.id = orders.idRekening', 'inner');
+        $this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'inner');
 
         $this->db->where('orders.status', 1);
 
@@ -42,8 +44,9 @@ class M_admin extends CI_Model
 
     public function getKeranjang($where)
     {
-        $this->db->select('orders.*, barang.kodeBarang, barang.namaBarang, barang.gambar');
+        $this->db->select('orders.*, barang.kodeBarang, barang.namaBarang, barang.gambar, barang.harga, ongkir.kota, ongkir.harga as hargaOngkir');
         $this->db->join('barang', 'barang.id = orders.idBarang', 'inner');
+        $this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'inner');
 
         $this->db->where($where);
 
@@ -58,6 +61,18 @@ class M_admin extends CI_Model
         $this->db->order_by('tanggal', 'desc');
 
         return $this->db->get('progres')->result();
+    }
+
+    public function getRekening()
+    {
+        $this->db->order_by('namaBank', 'asc');
+        return $this->db->get('rekening')->result();
+    }
+
+    public function getOngkir()
+    {
+        $this->db->order_by('kota', 'asc');
+        return $this->db->get('ongkir')->result();
     }
 }
 

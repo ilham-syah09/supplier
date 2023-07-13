@@ -1,10 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">INVENTARIS</a>
+            <a href="index.html">SUPPLIER</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">INV</a>
+            <a href="index.html">SPR</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
@@ -18,6 +18,13 @@
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Data Barang</span></a>
                 <ul class="dropdown-menu">
                     <li class="<?= ($this->uri->segment(2) == 'barang') ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/barang'); ?>"><i class="fas fa-users"></i> <span>List barang</span></a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fa fa-cogs"></i> <span>Setting</span></a>
+                <ul class="dropdown-menu">
+                    <li class="<?= ($this->uri->segment(2) == 'rekening') ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/rekening'); ?>"><i class="fa fa-money"></i> <span>Rekening</span></a></li>
+                    <li class="<?= ($this->uri->segment(2) == 'ongkir') ? 'active' : ''; ?>"><a class="nav-link" href="<?= base_url('admin/ongkir'); ?>"><i class="fa fa-truck"></i> <span>Ongkir</span></a></li>
                 </ul>
             </li>
 

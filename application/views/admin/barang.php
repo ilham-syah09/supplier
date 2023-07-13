@@ -21,6 +21,9 @@
 											<th class="text-center">#</th>
 											<th>Kode Barang</th>
 											<th>Nama Barang</th>
+											<th>Deskripsi</th>
+											<th>Harga</th>
+											<th>Stok</th>
 											<th>Gambar</th>
 											<th>Action</th>
 										</tr>
@@ -31,6 +34,9 @@
 												<td><?= $i + 1; ?></td>
 												<td><?= $b->kodeBarang; ?></td>
 												<td><?= $b->namaBarang; ?></td>
+												<td><?= $b->deskripsi; ?></td>
+												<td><?= 'Rp. ' . number_format($b->harga, 0, ',', '.'); ?></td>
+												<td><?= $b->stok; ?></td>
 												<td>
 													<a href="<?= base_url('uploads/gambar/' . $b
 																	->gambar); ?>" target="_blank">
@@ -45,7 +51,7 @@
 														</button>
 														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 															<a href="<?= base_url('admin/barang/delete/' . $b->id); ?>" class="dropdown-item"><i class="fas fa-trash"></i> Delete</a>
-															<a href="javascript:void(0)" class="dropdown-item edit_btn" data-toggle="modal" data-target="#modalEdit" data-id="<?= $b->id; ?>" data-namabarang="<?= $b->namaBarang; ?>"><i class="fas fa-arrow-left"></i> Edit</a>
+															<a href="javascript:void(0)" class="dropdown-item edit_btn" data-toggle="modal" data-target="#modalEdit" data-id="<?= $b->id; ?>" data-namabarang="<?= $b->namaBarang; ?>" data-harga="<?= $b->harga; ?>" data-stok="<?= $b->stok; ?>" data-deskripsi="<?= $b->deskripsi; ?>"><i class="fas fa-arrow-left"></i> Edit</a>
 														</div>
 													</div>
 												</td>
@@ -80,8 +86,20 @@
 						<input type="text" class="form-control" name="namaBarang">
 					</div>
 					<div class="form-group">
+						<label>Harga</label>
+						<input type="number" class="form-control" name="harga">
+					</div>
+					<div class="form-group">
+						<label>Stok</label>
+						<input type="number" class="form-control" name="stok">
+					</div>
+					<div class="form-group">
 						<label>Gambar</label>
 						<input type="file" class="form-control" name="gambar">
+					</div>
+					<div class="form-group">
+						<label>Deskripsi</label>
+						<textarea name="deskripsi" class="form-control" cols="30" rows="10"></textarea>
 					</div>
 					<div class="modal-footer bg-whitesmoke br">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -111,8 +129,20 @@
 						<input type="text" class="form-control" name="namaBarang" id="namaBarang">
 					</div>
 					<div class="form-group">
+						<label>Harga</label>
+						<input type="number" class="form-control" name="harga" id="harga">
+					</div>
+					<div class="form-group">
+						<label>Stok</label>
+						<input type="number" class="form-control" name="stok" id="stok">
+					</div>
+					<div class="form-group">
 						<label>Gambar</label>
 						<input type="file" class="form-control" name="gambar">
+					</div>
+					<div class="form-group">
+						<label>Deskripsi</label>
+						<textarea name="deskripsi" class="form-control" cols="30" rows="10" id="deskripsi"></textarea>
 					</div>
 					<div class="modal-footer bg-whitesmoke br">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -131,9 +161,15 @@
 		$(edit_btn[i]).click(function() {
 			let id = $(this).data('id');
 			let namaBarang = $(this).data('namabarang');
+			let harga = $(this).data('harga');
+			let stok = $(this).data('stok');
+			let deskripsi = $(this).data('deskripsi');
 
 			$('#idBarang').val(id);
 			$('#namaBarang').val(namaBarang);
+			$('#harga').val(harga);
+			$('#stok').val(stok);
+			$('#deskripsi').text(deskripsi);
 		});
 	});
 </script>
