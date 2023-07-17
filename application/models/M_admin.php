@@ -31,8 +31,8 @@ class M_admin extends CI_Model
         $this->db->select('orders.*, barang.namaBarang, barang.kodeBarang, user.name, rekening.namaBank, rekening.noRek, ongkir.kota');
         $this->db->join('barang', 'barang.id = orders.idBarang', 'inner');
         $this->db->join('user', 'user.id = orders.idUser', 'inner');
-        $this->db->join('rekening', 'rekening.id = orders.idRekening', 'inner');
-        $this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'inner');
+        $this->db->join('rekening', 'rekening.id = orders.idRekening', 'left');
+        $this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'left');
 
         $this->db->where('orders.status', 1);
 
@@ -46,7 +46,7 @@ class M_admin extends CI_Model
     {
         $this->db->select('orders.*, barang.kodeBarang, barang.namaBarang, barang.gambar, barang.harga, ongkir.kota, ongkir.harga as hargaOngkir');
         $this->db->join('barang', 'barang.id = orders.idBarang', 'inner');
-        $this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'inner');
+        $this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'left');
 
         $this->db->where($where);
 

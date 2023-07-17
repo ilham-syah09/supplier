@@ -41,7 +41,7 @@ class M_Customer extends CI_Model
 	{
 		$this->db->select('orders.*, barang.kodeBarang, barang.namaBarang, barang.gambar, barang.stok, barang.harga, ongkir.kota, ongkir.harga as hargaOngkir');
 		$this->db->join('barang', 'barang.id = orders.idBarang', 'inner');
-		$this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'inner');
+		$this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'left');
 
 		$this->db->where($where);
 
@@ -54,8 +54,8 @@ class M_Customer extends CI_Model
 	{
 		$this->db->select('orders.*, barang.kodeBarang, barang.namaBarang, barang.gambar, rekening.namaBank, rekening.noRek, ongkir.kota');
 		$this->db->join('barang', 'barang.id = orders.idBarang', 'inner');
-		$this->db->join('rekening', 'rekening.id = orders.idRekening', 'inner');
-		$this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'inner');
+		$this->db->join('rekening', 'rekening.id = orders.idRekening', 'left');
+		$this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'left');
 
 		$this->db->where($where);
 
