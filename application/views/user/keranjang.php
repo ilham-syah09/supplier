@@ -18,7 +18,7 @@
 										<th>Harga</th>
 										<th>Jumlah</th>
 										<th>Subtotal</th>
-										<th>Action</th>
+										<!-- <th>Action</th> -->
 									</tr>
 								</thead>
 								<tbody>
@@ -54,7 +54,7 @@
 											<td class="subTotal">
 												<span class="harga"><?= 'Rp. ' . number_format(($data->harga * $data->jumlah), 0, ',', '.'); ?></span>
 											</td>
-											<td>
+											<!-- <td>
 												<div class="dropdown">
 													<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 														Action
@@ -63,7 +63,7 @@
 														<a href="<?= base_url('user/keranjang/delete/' . $data->id); ?>" class="dropdown-item"><i class="fas fa-trash"></i> Delete</a>
 													</div>
 												</div>
-											</td>
+											</td> -->
 										</tr>
 									<?php endforeach; ?>
 								</tbody>
