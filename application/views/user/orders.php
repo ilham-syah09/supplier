@@ -173,9 +173,9 @@
 									<table class="table table-bordered table-hover table-vcenter" id="tabel-progres">
 										<thead>
 											<tr>
-												<th class="text-center">#</th>
-												<th>Status</th>
+												<th class="text-center">No</th>
 												<th>Tanggal</th>
+												<th>Status</th>
 												<th>Keterangan</th>
 											</tr>
 										</thead>
@@ -311,8 +311,8 @@
 							$("#tabel-progres").append(
 								`<tr class='tr_isi-progres'>
                                 <td class='text-center'>${i + 1}</td>
-                                <td>${res.data[i].status}</td>
                                 <td>${(res.data[i].tanggal != null) ? res.data[i].tanggal : ''}</td>
+                                <td>${res.data[i].status}</td>
                                 <td>${(res.data[i].ket != null) ? res.data[i].ket : ''}</td>
                                 <tr>`
 							);
