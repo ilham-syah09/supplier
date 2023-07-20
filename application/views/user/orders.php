@@ -11,7 +11,7 @@
 							<table class="table table-striped" id="table-1">
 								<thead>
 									<tr>
-										<th class="text-center">#</th>
+										<th class="text-center">No</th>
 										<th>Total Biaya</th>
 										<th>Bank Transfer</th>
 										<th>Pengiriman</th>
@@ -128,7 +128,7 @@
 									<table class="table table-bordered table-hover table-vcenter" id="tabel-list">
 										<thead>
 											<tr>
-												<th class="text-center">#</th>
+												<th class="text-center">No</th>
 												<th>Kode Barang</th>
 												<th>Nama Barang</th>
 												<th>Gambar</th>

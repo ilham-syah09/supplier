@@ -19,7 +19,7 @@
 									<thead>
 										<tr>
 											<th class="text-center">
-												#
+												No
 											</th>
 											<th>Name</th>
 											<th>Email</th>
