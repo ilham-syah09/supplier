@@ -121,6 +121,20 @@ class Orders extends CI_Controller
 
 		redirect('admin/orders', 'refresh');
 	}
+
+	public function delete($idKhusus)
+	{
+		$delete = $this->db->delete('orders', ['idKhusus' => $idKhusus]);
+
+		if ($delete) {
+			$this->db->delete('progres', ['idKhusus' => $idKhusus]);
+			$this->session->set_flashdata('toastr-success', 'Sukses hapus data');
+		} else {
+			$this->session->set_flashdata('toastr-error', 'Gagal hapus data');
+		}
+
+		redirect('admin/orders', 'refresh');
+	}
 }
 
     /* End of file Orders.php */

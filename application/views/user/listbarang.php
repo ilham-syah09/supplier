@@ -14,6 +14,9 @@
 								</div>
 								<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
 									<h6 class="text-truncate mb-3"><?= $brg->namaBarang; ?></h6>
+									<h6 class="text-truncate mb-3"><?= 'Rp. ' . number_format($brg->harga, 0, ',', '.'); ?></h6>
+									<span class="text-truncate mb-3"><?= 'Stok : ' . $brg->stok; ?></span>
+									<P class="text-truncate mb-3"><?= $brg->deskripsi; ?></P>
 								</div>
 								<div class="card-footer d-flex justify-content-center border">
 									<form action="<?= base_url('user/listbarang/addToCart'); ?>" method="POST">

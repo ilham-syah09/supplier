@@ -16,7 +16,8 @@
 										<th>Nama Barang</th>
 										<th>Gambar</th>
 										<th>Harga</th>
-										<th>Jumlah</th>
+										<th>Stok</th>
+										<th>Jumlah Order</th>
 										<th>Subtotal</th>
 										<!-- <th>Action</th> -->
 									</tr>
@@ -36,6 +37,7 @@
 												</a>
 											</td>
 											<td><?= 'Rp. ' . number_format($data->harga, 0, ',', '.'); ?></td>
+											<td><?= $data->stok; ?></td>
 											<td>
 												<div class="input-group mx-auto" style="width: 100px;">
 													<div class="input-group-btn">
